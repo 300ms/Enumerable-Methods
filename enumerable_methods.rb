@@ -2,6 +2,10 @@
 
 # rubocop: disable Metrics/ModuleLength
 
+# rubocop: disable Metrics/BlockNesting
+
+# rubocop: disable Style/IfInsideElse
+
 module Enumerable
   def my_each
     return to_enum unless block_given?
@@ -160,7 +164,6 @@ module Enumerable
   end
 
   def my_map(prc)
-
     arr = self
     if arr.is_a? Array
       x = []
@@ -180,4 +183,8 @@ module Enumerable
   end
 end
 
+# rubocop: enable Metrics/ModuleLength
+#
+# rubocop: enable Metrics/ModuleLength
+#
 # rubocop: enable Metrics/ModuleLength
