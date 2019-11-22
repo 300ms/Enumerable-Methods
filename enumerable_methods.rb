@@ -185,6 +185,6 @@ end
 
 # rubocop: enable Metrics/ModuleLength
 #
-# rubocop: enable Metrics/ModuleLength
+# rubocop: enable Metrics/BlockNesting
 #
-# rubocop: enable Metrics/ModuleLength
+# rubocop: enable Style/IfInsideElse
