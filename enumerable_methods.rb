@@ -171,3 +171,5 @@ module Enumerable
     end
   end
 end
+
+# rubocop: enable Metrics/ModuleLength
