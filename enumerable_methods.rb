@@ -55,14 +55,16 @@ module Enumerable
   end
 
   def my_all?
-    return to_enum unless block_given?
-
     arr = self
     if arr.is_a? Array
       x = true
       i = 0
       while i < arr.length
-        x = false unless yield(arr[i])
+        if block_given?
+          x = false unless yield(arr[i])
+        else
+          x = false unless arr[i]
+        end
         i += 1
       end
       x
@@ -72,14 +74,15 @@ module Enumerable
   end
 
   def my_any?
-    return to_enum unless block_given?
-
     arr = self
     if arr.is_a? Array
       i = 0
       while i < arr.length
-        return true if yield(arr[i])
-
+        if block_given?
+          return true if yield(arr[i])
+        else
+          return true if arr[i]
+        end
         i += 1
       end
       false
@@ -89,14 +92,16 @@ module Enumerable
   end
 
   def my_none?
-    return to_enum unless block_given?
-
     arr = self
     if arr.is_a? Array
       x = true
       i = 0
       while i < arr.length
-        x = false if yield(arr[i])
+        if block_given?
+          x = false if yield(arr[i])
+        else
+          x = false if arr[i]
+        end
         i += 1
       end
       x
@@ -106,14 +111,16 @@ module Enumerable
   end
 
   def my_count
-    return to_enum unless block_given?
-
     arr = self
     if arr.is_a? Array
       x = 0
       i = 0
       while i < arr.length
-        x += 1 if yield(arr[i])
+        if block_given?
+          x += 1 if yield(arr[i])
+        else
+          x += 1 if arr[i]
+        end
         i += 1
       end
       x
@@ -123,14 +130,16 @@ module Enumerable
   end
 
   def my_inject
-    return to_enum unless block_given?
-
     arr = self
     if arr.is_a? Array
       x = arr[0]
       i = 1
       while i < arr.length
-        x = yield(x, arr[i])
+        x = if block_given?
+              yield(x, arr[i])
+            else
+              [x, arr[i]]
+            end
         i += 1
       end
       x
@@ -140,8 +149,6 @@ module Enumerable
   end
 
   def multiply_els
-    return to_enum unless block_given?
-
     arr = self
     if arr.is_a? Array
       arr.my_inject do |y, n|
@@ -153,6 +160,7 @@ module Enumerable
   end
 
   def my_map(prc)
+
     arr = self
     if arr.is_a? Array
       x = []
