@@ -6,13 +6,15 @@
 
 # rubocop: disable Style/IfInsideElse
 
-# rubocop: disable Style/ConditionalAssignment
-
 # rubocop: disable Metrics/CyclomaticComplexity
 
 # rubocop: disable Metrics/PerceivedComplexity
 
-# rubocop: disable Lint/UnusedMethodArgument
+# rubocop: disable Layout/SpaceBeforeBlockBraces
+
+# rubocop: disable Style/NegatedIf
+
+# rubocop: disable Layout/SpaceInsideBlockBraces
 
 module Enumerable
   def my_each
@@ -187,17 +189,17 @@ module Enumerable
 end
 
 # rubocop: enable Metrics/ModuleLength
-#
-# rubocop: enable Metrics/BlockNesting
-#
-# rubocop: enable Style/IfInsideElse
 
-# rubocop: enable Style/ConditionalAssignment
+# rubocop: enable Metrics/BlockNesting
+
+# rubocop: enable Style/IfInsideElse
 
 # rubocop: enable Metrics/CyclomaticComplexity
 
 # rubocop: enable Metrics/PerceivedComplexity
 
-# rubocop: enable Lint/UnusedMethodArgument
+# rubocop: enable Layout/SpaceBeforeBlockBraces
 
-puts (5..10).inject(1) { |product, n| product * n }
+# rubocop: enable Style/NegatedIf
+
+# rubocop: enable Layout/SpaceInsideBlockBraces
