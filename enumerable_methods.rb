@@ -6,6 +6,12 @@
 
 # rubocop: disable Style/IfInsideElse
 
+# rubocop: disable Style/ConditionalAssignment
+
+# rubocop: disable Metrics/CyclomaticComplexity
+
+# rubocop: disable Metrics/PerceivedComplexity
+
 module Enumerable
   def my_each
     return to_enum unless block_given?
@@ -230,3 +236,9 @@ end
 # rubocop: enable Metrics/BlockNesting
 #
 # rubocop: enable Style/IfInsideElse
+
+# rubocop: enable Style/ConditionalAssignment
+
+# rubocop: enable Metrics/CyclomaticComplexity
+
+# rubocop: enable Metrics/PerceivedComplexity
