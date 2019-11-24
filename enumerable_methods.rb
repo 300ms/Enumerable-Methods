@@ -59,15 +59,17 @@ module Enumerable
   def my_all?(cls = nil)
     arr = self
     if block_given?
-      arr.my_each{ |x| return false if !yield(x)}
+      arr.my_each do |x|
+        return false unless yield(x)
+      end
     elsif cls.nil?
-      arr.my_each{ |x| return false if !x }
+      arr.my_each{ |x| return false unless x }
     elsif cls.is_a? Class
-      arr.my_each{ |x| return false if !(x.is_a?(cls)) }
+      arr.my_each{ |x| return false unless x.is_a?(cls) }
     elsif cls.is_a? Regexp
-      arr.my_each{ |x| return false if !(cls=~x) }
+      arr.my_each{ |x| return false unless cls =~ x }
     else
-      arr.my_each{ |x| return false if !(cls==x) }
+      arr.my_each{ |x| return false unless cls == x }
     end
     true
   end
@@ -79,11 +81,11 @@ module Enumerable
     elsif cls.nil?
       arr.my_each{ |x| return true if x }
     elsif cls.is_a? Class
-      arr.my_each{ |x| return true if (x.is_a?(cls)) }
+      arr.my_each{ |x| return true if x.is_a?(cls) }
     elsif cls.is_a? Regexp
-      arr.my_each{ |x| return true if (cls=~x) }
+      arr.my_each{ |x| return true if cls =~ x }
     else
-      arr.my_each{ |x| return true if (cls==x) }
+      arr.my_each{ |x| return true if cls == x }
     end
     true
   end
@@ -95,20 +97,20 @@ module Enumerable
     elsif cls.nil?
       arr.my_each{ |x| return false if x }
     elsif cls.is_a? Class
-      arr.my_each{ |x| return false if (x.is_a?(cls)) }
+      arr.my_each{ |x| return false if x.is_a?(cls) }
     elsif cls.is_a? Regexp
-      arr.my_each{ |x| return false if (cls=~x) }
+      arr.my_each{ |x| return false if cls =~ x }
     else
-      arr.my_each{ |x| return false if (cls==x) }
+      arr.my_each{ |x| return false if cls == x }
     end
     true
   end
 
   def my_count(item = nil)
     arr = self
+    x = 0
+    i = 0
     if item.nil?
-      x = 0
-      i = 0
       while i < arr.length
         if block_given?
           x += 1 if yield(arr[i])
@@ -117,24 +119,21 @@ module Enumerable
         end
         i += 1
       end
-      x
     else
-      x = 0
-      i = 0
       while i < arr.length
         x += 1 if item == arr[i]
         i += 1
       end
-      x
     end
+    x
   end
 
   def my_inject(initial = nil, sym = nil)
     arr = self
     arr = arr.to_a unless arr.class == Array
     initial.nil? ? (x = arr[0]) : (x = initial + arr[0])
+    i = 1
     if sym.nil?
-      i = 1
       while i < arr.length
         x = if block_given?
               yield(x, arr[i])
@@ -143,9 +142,7 @@ module Enumerable
             end
         i += 1
       end
-      x
     else
-      i = 1
       while i < arr.length
         x = if block_given?
               yield(x.sym(arr[i]))
@@ -154,8 +151,8 @@ module Enumerable
             end
         i += 1
       end
-      x
     end
+    x
   end
 
   def multiply_els
