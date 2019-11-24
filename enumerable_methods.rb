@@ -12,6 +12,8 @@
 
 # rubocop: disable Metrics/PerceivedComplexity
 
+# rubocop: disable Lint/UnusedMethodArgument
+
 module Enumerable
   def my_each
     return to_enum unless block_given?
@@ -117,6 +119,7 @@ module Enumerable
       cls.class == Integer.class ? cls = cls : cls = cls.class
       while i < arr.length
         return true if arr[i].class == cls
+
         i += 1
       end
       false
@@ -242,3 +245,5 @@ end
 # rubocop: enable Metrics/CyclomaticComplexity
 
 # rubocop: enable Metrics/PerceivedComplexity
+
+# rubocop: enable Lint/UnusedMethodArgument
