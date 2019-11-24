@@ -19,34 +19,26 @@ module Enumerable
     return to_enum unless block_given?
 
     arr = self
-    if arr.is_a? Array
-      x = []
-      i = 0
-      while i < arr.length
-        x.push(yield(arr[i]))
-        i += 1
-      end
-      x
-    else
-      puts 'Error: Parameter is not an array!'
+    i = 0
+    x = []
+    while i < arr.length
+      x.push(yield(arr[i]))
+      i += 1
     end
+    x
   end
 
   def my_each_with_index
     return to_enum unless block_given?
 
     arr = self
-    if arr.is_a? Array
-      x = []
-      i = 0
-      while i < arr.length
-        x.push(yield(arr[i], i))
-        i += 1
-      end
-      x
-    else
-      puts 'Error: Parameter is not an array!'
+    x = []
+    i = 0
+    while i < arr.length
+      x.push(yield(arr[i], i))
+      i += 1
     end
+    x
   end
 
   def my_select
@@ -55,138 +47,83 @@ module Enumerable
     x = []
     i = 0
     arr = self
-    if arr.is_a? Array
-      while i < arr.length
-        x.push(arr[i]) if yield(arr[i])
-        i += 1
-      end
-      x
-    else
-      puts 'Error: Parameter is not an array!'
+    while i < arr.length
+      x.push(arr[i]) if yield(arr[i])
+      i += 1
     end
+    x
   end
 
   def my_all?(cls = nil)
     arr = self
-    if cls.nil?
-      if arr.is_a? Array
-        x = true
-        i = 0
-        while i < arr.length
-          if block_given?
-            x = false unless yield(arr[i])
-          else
-            x = false unless arr[i]
-          end
-          i += 1
-        end
-        x
-      else
-        puts 'Error: Parameter is not an array!'
-      end
+    if block_given?
+      arr.my_each{ |x| return false if !yield(x)}
+    elsif cls.nil?
+      arr.my_each{ |x| return false if !x }
+    elsif cls.is_a? Class
+      arr.my_each{ |x| return false if !(x.is_a?(cls)) }
+    elsif cls.is_a? Regexp
+      arr.my_each{ |x| return false if !(cls=~x) }
     else
-      x = true
-      i = 0
-      cls.class == Integer.class ? cls = cls : cls = cls.class
-      puts cls
-      while i < arr.length
-        x = false unless arr[i].class == cls
-        i += 1
-      end
-      x
+      arr.my_each{ |x| return false if !(cls==x) }
     end
+    true
   end
 
   def my_any?(cls = nil)
     arr = self
-    if cls.nil?
-      if arr.is_a? Array
-        i = 0
-        while i < arr.length
-          if block_given?
-            return true if yield(arr[i])
-          else
-            return true if arr[i]
-          end
-          i += 1
-        end
-        false
-      else
-        puts 'Error: Parameter is not an array!'
-      end
+    if block_given?
+      arr.my_each{ |x| return true if yield(x)}
+    elsif cls.nil?
+      arr.my_each{ |x| return true if x }
+    elsif cls.is_a? Class
+      arr.my_each{ |x| return true if (x.is_a?(cls)) }
+    elsif cls.is_a? Regexp
+      arr.my_each{ |x| return true if (cls=~x) }
     else
-      i = 0
-      cls.class == Integer.class ? cls = cls : cls = cls.class
-      while i < arr.length
-        return true if arr[i].class == cls
-
-        i += 1
-      end
-      false
+      arr.my_each{ |x| return true if (cls==x) }
     end
+    true
   end
 
   def my_none?(cls = nil)
     arr = self
-    if cls.nil?
-      if arr.is_a? Array
-        x = true
-        i = 0
-        while i < arr.length
-          if block_given?
-            x = false if yield(arr[i])
-          else
-            x = false if arr[i]
-          end
-          i += 1
-        end
-        x
-      else
-        puts 'Error: Parameter is not an array!'
-      end
+    if block_given?
+      arr.my_each{ |x| return false if yield(x)}
+    elsif cls.nil?
+      arr.my_each{ |x| return false if x }
+    elsif cls.is_a? Class
+      arr.my_each{ |x| return false if (x.is_a?(cls)) }
+    elsif cls.is_a? Regexp
+      arr.my_each{ |x| return false if (cls=~x) }
     else
-      x = true
-      i = 0
-      cls.class == Integer.class ? cls = cls : cls = cls.class
-      puts cls
-      while i < arr.length
-        x = false if arr[i].class == cls
-        i += 1
-      end
-      x
+      arr.my_each{ |x| return false if (cls==x) }
     end
+    true
   end
 
   def my_count(item = nil)
     arr = self
     if item.nil?
-      if arr.is_a? Array
-        x = 0
-        i = 0
-        while i < arr.length
-          if block_given?
-            x += 1 if yield(arr[i])
-          else
-            x += 1 if arr[i]
-          end
-          i += 1
+      x = 0
+      i = 0
+      while i < arr.length
+        if block_given?
+          x += 1 if yield(arr[i])
+        else
+          x += 1 if arr[i]
         end
-        x
-      else
-        puts 'Error: Parameter is not an array!'
+        i += 1
       end
+      x
     else
-      if arr.is_a? Array
-        x = 0
-        i = 0
-        while i < arr.length
-          x += 1 if item == arr[i]
-          i += 1
-        end
-        x
-      else
-        puts 'Error: Parameter is not an array!'
+      x = 0
+      i = 0
+      while i < arr.length
+        x += 1 if item == arr[i]
+        i += 1
       end
+      x
     end
   end
 
@@ -247,3 +184,14 @@ end
 # rubocop: enable Metrics/PerceivedComplexity
 
 # rubocop: enable Lint/UnusedMethodArgument
+
+
+puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
+puts %w[ant bear cat].my_all?(/t/)                        #=> false
+puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
+puts [nil, true, 99].my_all?                              #=> false
+puts [].my_all?                                           #=> true
+
+puts %w[ant bear cat].my_all?(/t/)                        #=> false
+puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
