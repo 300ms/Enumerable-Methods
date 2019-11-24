@@ -131,16 +131,29 @@ module Enumerable
     arr = self
     arr = arr.to_a unless arr.class == Array
     initial.nil? ? (x = arr[0]) : (x = initial + arr[0])
-    i = 1
-    while i < arr.length
-      x = if block_given?
-            yield(x, arr[i])
-          else
-            [x, arr[i]]
-          end
-      i += 1
+    if sym.nil?
+      i = 1
+      while i < arr.length
+        x = if block_given?
+              yield(x, arr[i])
+            else
+              [x, arr[i]]
+            end
+        i += 1
+      end
+      x
+    else
+      i = 1
+      while i < arr.length
+        x = if block_given?
+              yield(x.sym(arr[i]))
+            else
+              [x.sym(arr[i])]
+            end
+        i += 1
+      end
+      x
     end
-    x
   end
 
   def multiply_els
@@ -155,6 +168,8 @@ module Enumerable
   end
 
   def my_map(prc = nil)
+    return to_enum unless block_given?
+
     arr = self
     arr = arr.to_a if arr.class != Array
     x = []
@@ -185,13 +200,4 @@ end
 
 # rubocop: enable Lint/UnusedMethodArgument
 
-
-puts %w[ant bear cat].my_all? { |word| word.length >= 3 } #=> true
-puts %w[ant bear cat].my_all? { |word| word.length >= 4 } #=> false
-puts %w[ant bear cat].my_all?(/t/)                        #=> false
-puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
-puts [nil, true, 99].my_all?                              #=> false
-puts [].my_all?                                           #=> true
-
-puts %w[ant bear cat].my_all?(/t/)                        #=> false
-puts [1, 2i, 3.14].my_all?(Numeric)                       #=> true
+puts (5..10).inject(1) { |product, n| product * n }
