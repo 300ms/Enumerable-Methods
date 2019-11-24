@@ -12,8 +12,6 @@
 
 # rubocop: disable Layout/SpaceBeforeBlockBraces
 
-# rubocop: disable Style/NegatedIf
-
 # rubocop: disable Layout/SpaceInsideBlockBraces
 
 module Enumerable
@@ -196,7 +194,5 @@ end
 # rubocop: enable Metrics/PerceivedComplexity
 
 # rubocop: enable Layout/SpaceBeforeBlockBraces
-
-# rubocop: enable Style/NegatedIf
 
 # rubocop: enable Layout/SpaceInsideBlockBraces
