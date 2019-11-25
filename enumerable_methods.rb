@@ -140,7 +140,6 @@ module Enumerable
       (x = initial)
       i = 0
     end
-    puts x
     if sym.nil?
       while i < arr.length
         x = if block_given?
