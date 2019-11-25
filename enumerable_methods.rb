@@ -85,7 +85,7 @@ module Enumerable
     else
       arr.my_each{ |x| return true if cls == x }
     end
-    true
+    false
   end
 
   def my_none?(cls = nil)
@@ -133,8 +133,14 @@ module Enumerable
       sym = initial.to_sym
       initial = nil
     end
-    initial.nil? ? (x = arr[0]) : (x = initial + arr[0])
-    i = 1
+    if initial.nil?
+      (x = arr[0])
+      i = 1
+    else
+      (x = initial)
+      i = 0
+    end
+    puts x
     if sym.nil?
       while i < arr.length
         x = if block_given?
