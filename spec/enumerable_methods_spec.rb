@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require_relative '../enumerable_methods'
 
 describe '#my_each' do
   let(:array) { [1, 2, 3, 4, 5] }
-  
+
   it 'with a block' do
     expect(array.my_each { |i| i * i }).to eql([1, 4, 9, 16, 25])
   end
@@ -13,11 +15,11 @@ end
 
 describe '#my_each_with_index' do
   let(:array) { [1, 2, 3, 4, 5] }
-  let(:arrs) { ['cat', 'dog', 'wombat'] }
+  let(:arrs) { %w[cat dog wombat] }
 
   it 'with a block' do
     hash = {}
-    expect(arrs.my_each_with_index{ |item, index| hash[item] = index}).to eql(nil)
+    expect(arrs.my_each_with_index { |item, index| hash[item] = index }).to eql(nil)
   end
   it 'without a block' do
     expect(array.my_each).to be_an(Enumerator)
@@ -29,10 +31,10 @@ describe '#my_select' do
   let(:arr) { [12.2, 13.4, 15.5, 16.9, 10.2] }
 
   it 'with a block' do
-    expect(array.my_select { |num| num.even? }).to eql([2, 4])
+    expect(array.my_select(&:even?)).to eql([2, 4])
   end
   it 'with a block' do
-    expect(new_arr = arr.my_select { |num| num.to_f > 13.3}).to eql([13.4, 15.5, 16.9])
+    expect(new_arr = arr.my_select { |num| num.to_f > 13.3 }).to eql([13.4, 15.5, 16.9])
   end
   it 'without a block' do
     expect(arr.my_select).to be_an(Enumerator)
@@ -160,6 +162,6 @@ describe '#my_inject?' do
     expect(x.my_inject(1, :*)).to eql(151200)
   end
   it 'empty input' do
-    expect(longest = %w[cat sheep bear].inject { |memo, word| memo.length > word.length ? memo : word}).to eql('sheep')
+    expect(longest = %w[cat sheep bear].inject { |memo, word| memo.length > word.length ? memo : word }).to eql('sheep')
   end
 end
