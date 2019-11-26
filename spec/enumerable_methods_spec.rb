@@ -34,7 +34,7 @@ describe '#my_select' do
     expect(array.my_select(&:even?)).to eql([2, 4])
   end
   it 'with a block' do
-    expect(new_arr = arr.my_select { |num| num.to_f > 13.3 }).to eql([13.4, 15.5, 16.9])
+    expect(arr.my_select { |num| num.to_f > 13.3 }).to eql([13.4, 15.5, 16.9])
   end
   it 'without a block' do
     expect(arr.my_select).to be_an(Enumerator)
@@ -153,15 +153,15 @@ describe '#my_inject?' do
     expect(x.my_inject { |sum, n| sum + n }).to eql(45)
   end
   it 'with a symbol' do
-    expect(x.my_inject :+).to eql(45)
+    expect(x.my_inject(:+)).to eql(45)
   end
   it 'with an initial and a block' do
-    expect(x.inject(1) { |product, n| product * n }).to eql(151200)
+    expect(x.inject(1) { |product, n| product * n }).to eql(151_200)
   end
   it 'with an initial and a symbol' do
-    expect(x.my_inject(1, :*)).to eql(151200)
+    expect(x.my_inject(1, :*)).to eql(151_200)
   end
   it 'empty input' do
-    expect(longest = %w[cat sheep bear].inject { |memo, word| memo.length > word.length ? memo : word }).to eql('sheep')
+    expect(%w[cat sheep bear].inject { |memo, word| memo.length > word.length ? memo : word }).to eql('sheep')
   end
 end
