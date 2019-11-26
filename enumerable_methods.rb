@@ -32,13 +32,11 @@ module Enumerable
     return to_enum unless block_given?
 
     arr = self
-    x = []
     i = 0
     while i < arr.length
-      x.push(yield(arr[i], i))
+      yield arr[i], i
       i += 1
     end
-    x
   end
 
   def my_select
