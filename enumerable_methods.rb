@@ -14,6 +14,8 @@
 
 # rubocop: disable Layout/SpaceInsideBlockBraces
 
+# rubocop: disable Style/EmptyLiteral
+
 module Enumerable
   def my_each
     return to_enum unless block_given?
@@ -21,7 +23,7 @@ module Enumerable
     arr = self
     i = 0
     while i < arr.length
-      (yield(arr[i]))
+      yield(arr[i])
       i += 1
     end
     self
@@ -203,3 +205,5 @@ end
 # rubocop: enable Layout/SpaceBeforeBlockBraces
 
 # rubocop: enable Layout/SpaceInsideBlockBraces
+
+# rubocop: enable Style/EmptyLiteral
