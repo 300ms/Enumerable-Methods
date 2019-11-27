@@ -10,6 +10,7 @@
     * [Original Description](#original-description)
     * [Personal Description](#personal-description)
     * [Methods List](#methods-list)
+* [Rspec Test Results](#rspec-test-results)
 * [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
 
@@ -24,6 +25,8 @@
 -In this project, we are supposed to write our own methods and these methods should be and work like a few methods in 
 Enumerable Module of Ruby language. 
 
+-Also there are tests(in /spec/enumerable_methods_spec.rb) and results(as an image) in the repository.
+
 ### Methods List
 
 - my_each
@@ -36,6 +39,10 @@ Enumerable Module of Ruby language.
 - my_inject
 - multiply_els
 - my_map
+
+## Rspec Test results
+
+![alt text](https://i.ibb.co/JqTcLzm/rspec-test-result.png "Rspec Test results")
 
 ## Contact
 
