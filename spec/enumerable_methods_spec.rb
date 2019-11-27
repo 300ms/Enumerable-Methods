@@ -6,7 +6,10 @@ describe '#my_each' do
   let(:array) { [1, 2, 3, 4, 5] }
 
   it 'with a block' do
-    expect(array.my_each { |i| i * i }).to eql([1, 4, 9, 16, 25])
+    expect(array.my_each { |i| i * 2 }).to eql([1, 2, 3, 4, 5])
+  end
+  it 'with a block' do
+    expect(array.my_each { |i| i * 2 }).to be_an(Array)
   end
   it 'without a block' do
     expect(array.my_each).to be_an(Enumerator)
@@ -18,8 +21,10 @@ describe '#my_each_with_index' do
   let(:arrs) { %w[cat dog wombat] }
 
   it 'with a block' do
-    hash = {}
-    expect(arrs.my_each_with_index { |item, index| hash[item] = index }).to eql(nil)
+    expect(arrs.my_each_with_index { |item, index| hash[item] = index }).to eql({"cat"=>0, "dog"=>1, "wombat"=>2})
+  end
+  it 'with a block' do
+    expect(arrs.my_each_with_index { |item, index| hash[item] = index }).to be_an(Hash)
   end
   it 'without a block' do
     expect(array.my_each).to be_an(Enumerator)
@@ -137,9 +142,16 @@ end
 
 describe '#my_map' do
   let(:array) { [1, 2, 3, 4] }
+  let(:hash) { x = {"cat"=>0, "dog"=>1, "wombat"=>2} }
 
   it 'with a block' do
     expect(array.my_map { |i| i * i }).to eql([1, 4, 9, 16])
+  end
+  it 'with a block' do
+    expect(hash.my_map{ |i , j| i.upcase }).to eql(["CAT", "DOG", "WOMBAT"])
+  end
+  it 'with a block' do
+    expect(hash.my_map{ |i , j| i.upcase }).to be_an(Array)
   end
   it 'without a block' do
     expect(array.my_map).to be_an(Enumerator)

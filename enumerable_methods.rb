@@ -20,23 +20,23 @@ module Enumerable
 
     arr = self
     i = 0
-    x = []
     while i < arr.length
-      x.push(yield(arr[i]))
+      (yield(arr[i]))
       i += 1
     end
-    x
+    self
   end
 
   def my_each_with_index
     return to_enum unless block_given?
-
+    x = Hash.new
     arr = self
     i = 0
     while i < arr.length
-      yield arr[i], i
+      x[arr[i]] = i
       i += 1
     end
+    x
   end
 
   def my_select
